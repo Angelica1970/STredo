@@ -85,6 +85,21 @@ const register = async ()=>{
     }
   }
 
+    
+  const deletePost = async()=>{
+  try {
+    const response = await fetch('https://strangers-things.herokuapp.com/api/2209-ftb-et-web-am/posts/5e8d1bd48829fb0017d2233b', {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    const result = await response.json()
+  } catch (error) {
+    console.log(error)
+  }
+}
   
 
 const runfile = async()=>{
@@ -92,6 +107,7 @@ const runfile = async()=>{
     await login()
     await createPost()
     await getPosts()
+    await deletePost()
     
 }
 
