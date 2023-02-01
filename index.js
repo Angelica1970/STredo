@@ -8,6 +8,7 @@
 // }
 
 let token 
+let postId
 
 const login = async ()=>{
     try { 
