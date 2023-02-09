@@ -9,6 +9,7 @@
 
 let token 
 let postId
+let messages
 
 const login = async ()=>{
     try { 
@@ -81,6 +82,7 @@ const register = async ()=>{
       })
       const result = await response.json()
       console.log(result.data.post)
+      postId = result.data.post._id
     } catch(error){
       console.log(error)
     }
@@ -89,7 +91,7 @@ const register = async ()=>{
     
   const deletePost = async()=>{
   try {
-    const response = await fetch('https://strangers-things.herokuapp.com/api/2209-ftb-et-web-am/posts/5e8d1bd48829fb0017d2233b', {
+    const response = await fetch(`https://strangers-things.herokuapp.com/api/2209-ftb-et-web-am/posts/${postId}`, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
@@ -97,10 +99,34 @@ const register = async ()=>{
       }
     })
     const result = await response.json()
+    console.log(result)
   } catch (error) {
     console.log(error)
   }
 }
+
+const message = async ()=>{
+      try {
+     const response = await fetch(`https://strangers-things.herokuapp.com/api/2209-ftb-et-web-am/posts/${postId}/messages`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        message: {
+          content: "Do you still have this?  Would you take $10 less?"
+        }
+      })
+    })
+      const result = await response.json()
+      console.log(result)
+      } catch (error) {
+          console.log(error)
+      }
+  }
+  
+
   
 
 const runfile = async()=>{
@@ -109,6 +135,7 @@ const runfile = async()=>{
     await createPost()
     await getPosts()
     await deletePost()
+    await message()
     
 }
 
